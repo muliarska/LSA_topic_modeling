@@ -27,3 +27,7 @@ def form_dtm(all_words):
     # .....
 
     return document_term_matrix
+
+
+def tf_idf_modification(document_term_matrix):
+    pass
