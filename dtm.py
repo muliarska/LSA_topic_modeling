@@ -19,11 +19,11 @@ def form_dtm(all_words):
         for word in words:
             document_term_matrix[lst + 1].append(all_words[lst].count(word))
 
-    # кароче на виході ми маємо шось таке:
-    # ['apple', 'banana', 'peach', 'grape']
-    # [0, 2, 1, 2]
-    # [1, 1, 0, 0]
-    # [3, 0, 0, 2]
+    # на виході ми маємо щось таке:
+    # [['apple', 'banana', 'peach', 'grape'],
+    # [0, 2, 1, 2],
+    # [1, 1, 0, 0],
+    # [3, 0, 0, 2]]
     # .....
 
     return document_term_matrix
