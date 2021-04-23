@@ -1,3 +1,6 @@
+import math
+
+
 def form_dtm(all_words):
     # create list for unique words from all the documents
     words = []
@@ -30,4 +33,40 @@ def form_dtm(all_words):
 
 
 def tf_idf_modification(document_term_matrix):
-    pass
+    # defining the amount of documents and terms
+    amount_of_documents = len(document_term_matrix)
+    amount_of_terms = len(document_term_matrix[0])
+
+    # initialising matrix for saving results of tfidf applying
+    document_term_matrix_with_tf_idf = [[0] * amount_of_terms for _ in range(len(document_term_matrix))]
+    document_term_matrix_with_tf_idf[0] = document_term_matrix[0]
+
+    # applying tfidf for every term
+    for i in range(1, amount_of_documents):
+        for j in range(0, amount_of_terms):
+
+            # computing tf
+            # tf = (number of times term appears in a document) divide by
+            # (total number of terms in the document)
+
+            term_amount = document_term_matrix[i][j]
+            document_terms_amount = sum(document_term_matrix[i])
+
+            tf = term_amount / document_terms_amount
+
+            # computing idf
+            # idf = log((total number of documents) divide by
+            # (number of documents with a certain term in it))
+
+            # finding the number of documents with the certain term in it
+            documents_with_term = 0
+            for k in range(1, amount_of_documents):
+                if document_term_matrix[k][j] != 0:
+                    documents_with_term += 1
+
+            idf = math.log(amount_of_documents / documents_with_term)
+
+            # getting tfidf by tf * idf
+            document_term_matrix_with_tf_idf[i][j] = tf * idf
+
+    return document_term_matrix_with_tf_idf
