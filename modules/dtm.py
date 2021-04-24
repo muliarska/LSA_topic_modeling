@@ -33,8 +33,16 @@ def form_dtm(all_words):
 
 
 def tf_idf_modification(document_term_matrix):
+    """
+    (list) -> list
+
+    Function that applies TFIDF on the document term matrix.
+
+    :param document_term_matrix: matrix with the terms amounts in each document
+    :return: document term matrix modified with TFIDF
+    """
     # defining the amount of documents and terms
-    amount_of_documents = len(document_term_matrix)
+    amount_of_documents = len(document_term_matrix) - 1
     amount_of_terms = len(document_term_matrix[0])
 
     # initialising matrix for saving results of tfidf applying
@@ -42,7 +50,7 @@ def tf_idf_modification(document_term_matrix):
     document_term_matrix_with_tf_idf[0] = document_term_matrix[0]
 
     # applying tfidf for every term
-    for i in range(1, amount_of_documents):
+    for i in range(1, amount_of_documents + 1):
         for j in range(0, amount_of_terms):
 
             # computing tf
@@ -60,13 +68,13 @@ def tf_idf_modification(document_term_matrix):
 
             # finding the number of documents with the certain term in it
             documents_with_term = 0
-            for k in range(1, amount_of_documents):
+            for k in range(1, amount_of_documents + 1):
                 if document_term_matrix[k][j] != 0:
                     documents_with_term += 1
 
             idf = math.log(amount_of_documents / documents_with_term)
 
             # getting tfidf by tf * idf
-            document_term_matrix_with_tf_idf[i][j] = tf * idf
+            document_term_matrix_with_tf_idf[i][j] = round(tf * idf, 3)
 
     return document_term_matrix_with_tf_idf
