@@ -24,8 +24,8 @@ def process_data(filename, extension):
             # convert to lowercase
             words = [x.lower() for x in words]
             # stemming words (reducing each word to its root or base)
-            stemmed = [porter.stem(word) for word in words]
+            # stemmed = [porter.stem(word) for word in words]
 
-            all_words.append(stemmed)
+            all_words.append(words)
 
     return all_words
