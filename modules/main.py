@@ -7,7 +7,7 @@ all_words = process_data(filename, extension)
 # print(all_words[:10])
 
 # поки для швидшого виконання обрізала дані
-all_words = all_words[:10]
+all_words = all_words[:1]
 
 # constructing document term matrix
 constructed_dtm = form_dtm(all_words)

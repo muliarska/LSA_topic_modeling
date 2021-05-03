@@ -1,2 +1,4 @@
 nltk
 tarfile
+flask
+werkzeug+
