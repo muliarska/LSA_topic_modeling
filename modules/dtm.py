@@ -1,9 +1,18 @@
 import math
 
 
-def form_dtm(all_words):
+# function for creating term-document matrix
+def form_tdm(all_words):
+    '''
+    (list) -> list
+    
+    Form term-document matrix.
+    :param all_words: matrix with words of each document.
+    :return: term document matrix, with appearing of certain word in each document.
+    '''
     # create list for unique words from all the documents
     words = []
+    # print(len(all_words))
 
     # define those unique words and fill list with them
     for lst in range(0, len(all_words)):
@@ -11,25 +20,13 @@ def form_dtm(all_words):
             if element not in words:
                 words.append(element)
 
-    # create empty matrix, where the first row
-    # corresponds to all given words
-    document_term_matrix = [[] for x in range(len(all_words)+1)]
-    document_term_matrix[0] = words
-
-    # calculate how many times each word appears
-    # in each document and fill other lists with the results
-    for lst in range(len(all_words)):
-        for word in words:
-            document_term_matrix[lst + 1].append(all_words[lst].count(word))
-
-    # на виході ми маємо щось таке:
-    # [['apple', 'banana', 'peach', 'grape'],
-    # [0, 2, 1, 2],
-    # [1, 1, 0, 0],
-    # [3, 0, 0, 2]]
-    # .....
-
-    return document_term_matrix
+    # crate an empty list for term document matrix
+    term_document_matrix = [[] for x in range(len(words))]
+    for word in range(len(words)):
+        for lst in range(len(all_words)):
+            term_document_matrix[word].append(all_words[lst].count(words[word]))
+    
+    return term_document_matrix
 
 
 def tf_idf_modification(document_term_matrix):
