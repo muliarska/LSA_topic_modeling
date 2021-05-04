@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 from modules.process_data import process_data
-from modules.dtm import form_dtm, tf_idf_modification
+from modules.tdm import form_dtm, tf_idf_modification
 
 
 app = Flask(__name__)

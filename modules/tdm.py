@@ -29,35 +29,36 @@ def form_tdm(all_words):
     return term_document_matrix
 
 
-def tf_idf_modification(document_term_matrix):
+def tf_idf_modification(term_document_matrix):
     """
     (list) -> list
 
-    Function that applies TFIDF on the document term matrix.
+    Function that applies TF-IDF on the document term matrix.
 
-    :param document_term_matrix: matrix with the terms amounts in each document
-    :return: document term matrix modified with TFIDF
+    :param term_document_matrix: matrix with the terms amounts in each document
+    :return: document term matrix modified with TF-IDF
     """
     # defining the amount of documents and terms
-    amount_of_documents = len(document_term_matrix) - 1
-    amount_of_terms = len(document_term_matrix[0])
+    amount_of_documents = len(term_document_matrix[0])
+    amount_of_terms = len(term_document_matrix)
 
-    # initialising matrix for saving results of tfidf applying
-    document_term_matrix_with_tf_idf = [[0] * amount_of_terms for _ in range(len(document_term_matrix))]
-    document_term_matrix_with_tf_idf[0] = document_term_matrix[0]
+    # initialising matrix for saving results of tf-idf applying
+    term_document_matrix_with_tf_idf = [[0] * amount_of_documents for _ in range(amount_of_terms)]
 
-    # applying tfidf for every term
-    for i in range(1, amount_of_documents + 1):
-        for j in range(0, amount_of_terms):
+    # applying tf-idf for every term
+    for i in range(0, amount_of_terms):
+        for j in range(0, amount_of_documents):
 
             # computing tf
             # tf = (number of times term appears in a document) divide by
             # (total number of terms in the document)
 
-            term_amount = document_term_matrix[i][j]
-            document_terms_amount = sum(document_term_matrix[i])
+            term_amount_in_document = term_document_matrix[i][j]
+            terms_amount_in_document = 0
+            for k in range(0, amount_of_terms):
+                terms_amount_in_document += term_document_matrix[k][j]
 
-            tf = term_amount / document_terms_amount
+            tf = term_amount_in_document / terms_amount_in_document
 
             # computing idf
             # idf = log((total number of documents) divide by
@@ -65,13 +66,13 @@ def tf_idf_modification(document_term_matrix):
 
             # finding the number of documents with the certain term in it
             documents_with_term = 0
-            for k in range(1, amount_of_documents + 1):
-                if document_term_matrix[k][j] != 0:
+            for m in range(0, amount_of_documents):
+                if term_document_matrix[i][m] != 0:
                     documents_with_term += 1
 
             idf = math.log(amount_of_documents / documents_with_term)
 
             # getting tfidf by tf * idf
-            document_term_matrix_with_tf_idf[i][j] = round(tf * idf, 3)
+            term_document_matrix_with_tf_idf[i][j] = round(tf * idf, 3)
 
-    return document_term_matrix_with_tf_idf
+    return term_document_matrix_with_tf_idf
