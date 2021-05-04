@@ -4,7 +4,7 @@ from modules.svd import apply_svd
 
 filename = "../data/mini_newsgroups.tar.gz"
 extension = "r:gz"
-all_words = process_data(filename, extension)
+all_words, file_names = process_data(filename, extension)
 # print(all_words[:10])
 
 # поки для швидшого виконання обрізала дані

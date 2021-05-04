@@ -6,9 +6,11 @@ from nltk.stem.porter import PorterStemmer
 
 def process_data(filename, extension):
     stop_words = set(stopwords.words('english'))
-    porter = PorterStemmer()
-    all_words = []
+    # porter = PorterStemmer()
     tar = tarfile.open(filename, extension)
+
+    file_names = tar.getnames()
+    all_words = []
 
     for member in tar.getmembers():
         file = tar.extractfile(member)
@@ -28,4 +30,4 @@ def process_data(filename, extension):
 
             all_words.append(words)
 
-    return all_words
+    return all_words, file_names
