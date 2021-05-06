@@ -1,5 +1,6 @@
 from modules.tdm import form_tdm, tf_idf_modification
 from modules.process_data import process_data
+from modules.svd_basic import apply_svd_basic, classify_into_topics
 from modules.svd import apply_svd
 
 filename = "../data/mini_newsgroups.tar.gz"
@@ -14,10 +15,11 @@ all_words = all_words[:10]
 # constructing document term matrix
 constructed_tdm = form_tdm(all_words)
 
-# print(constructed_tdm)
 # applying tf_idf algorithm
 modified_tdm = tf_idf_modification(constructed_tdm)
 
-# print(modified_tdm)
-topics_numb = 9 # ???
-apply_svd(modified_tdm, file_names[:10], topics_numb)
+topics = classify_into_topics(modified_tdm, file_names[:10])
+
+# print results of classifying
+for i in topics:
+    print("Topic ", i, topics[i])
