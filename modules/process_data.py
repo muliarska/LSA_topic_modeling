@@ -1,18 +1,18 @@
 import tarfile
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
 
 
 def process_data(filename, extension):
     stop_words = set(stopwords.words('english'))
-    # porter = PorterStemmer()
     tar = tarfile.open(filename, extension)
 
     file_names = tar.getnames()
-    all_words = []
 
-    for member in tar.getmembers():
+    all_words = []
+    count_pop = 0
+
+    for member_index, member in enumerate(tar.getmembers()):
         file = tar.extractfile(member)
         if file is not None:
             # read content of file as string
@@ -25,9 +25,11 @@ def process_data(filename, extension):
             words = [x for x in words if x not in stop_words]
             # convert to lowercase
             words = [x.lower() for x in words]
-            # stemming words (reducing each word to its root or base)
-            # stemmed = [porter.stem(word) for word in words]
 
             all_words.append(words)
+
+        else:
+            file_names.pop(member_index-count_pop)
+            count_pop += 1
 
     return all_words, file_names

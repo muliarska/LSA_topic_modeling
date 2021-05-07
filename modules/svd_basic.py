@@ -18,12 +18,15 @@ def classify_into_topics(data, filenames):
     topics = dict()
 
     for list_index, doc_coeff_list in enumerate(vh):
-        if abs(max(doc_coeff_list)) > abs(min(doc_coeff_list)):
-            max_coef = max(doc_coeff_list)
-        else:
-            max_coef = min(doc_coeff_list)
+        max_coeff = doc_coeff_list[0] * s[0]
+        temp_coeff = doc_coeff_list[0]
 
-        topic_index = np.where(doc_coeff_list == max_coef)[0][0]
+        for i in range(len(doc_coeff_list)):
+            if abs(doc_coeff_list[i]) * s[i] > max_coeff:
+                max_coeff = abs(doc_coeff_list[i]) * s[i]
+                temp_coeff = doc_coeff_list[i]
+
+        topic_index = np.where(doc_coeff_list == temp_coeff)[0][0]
 
         if topic_index not in topics:
             topics[topic_index] = []
