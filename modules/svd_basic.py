@@ -9,11 +9,13 @@ def apply_svd_basic(data):
     # s - diagonal 10 x 10
     # vh - matrix 10 x 10
 
-    return np.linalg.svd(data, full_matrices=False)
+    return np.linalg.svd(data, full_matrices=True)
 
 
 def classify_into_topics(data, filenames):
     u, s, vh = apply_svd_basic(data)
+
+    print(len(s))
 
     topics = dict()
 

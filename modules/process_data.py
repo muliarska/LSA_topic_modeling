@@ -26,6 +26,10 @@ def process_data(filename, extension):
             # convert to lowercase
             words = [x.lower() for x in words]
 
+            for w in words:
+                if len(w) <= 2:
+                    words.remove(w)
+
             all_words.append(words)
 
         else:
