@@ -26,7 +26,7 @@ def form_tdm(all_words):
         for lst in range(len(all_words)):
             term_document_matrix[word].append(all_words[lst].count(words[word]))
     
-    return term_document_matrix
+    return words, term_document_matrix
 
 
 def tf_idf_modification(term_document_matrix):
