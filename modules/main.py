@@ -14,7 +14,7 @@ all_words, file_names = process_data(filename, extension)
 all_words = all_words
 
 # constructing document term matrix
-constructed_tdm = form_tdm(all_words)
+unique_words, constructed_tdm = form_tdm(all_words)
 
 # applying tf_idf algorithm
 modified_tdm = tf_idf_modification(constructed_tdm)
