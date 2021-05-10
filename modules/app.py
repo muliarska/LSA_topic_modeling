@@ -29,6 +29,8 @@ def upload():
         print(constructed_dtm)
         print(modified_dtm)
 
+        topics =
+
         return render_template("analytics.html", matrix=modified_dtm)
 
 

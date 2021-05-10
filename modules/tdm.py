@@ -3,13 +3,13 @@ import math
 
 # function for creating term-document matrix
 def form_tdm(all_words):
-    '''
+    """
     (list) -> list
     
     Form term-document matrix.
     :param all_words: matrix with words of each document.
     :return: term document matrix, with appearing of certain word in each document.
-    '''
+    """
     # create list for unique words from all the documents
     words = []
     # print(len(all_words))
@@ -72,7 +72,8 @@ def tf_idf_modification(term_document_matrix):
 
             idf = math.log(amount_of_documents / documents_with_term)
 
-            # getting tfidf by tf * idf
+            # getting tf-idf by tf * idf
             term_document_matrix_with_tf_idf[i][j] = round(tf * idf, 3)
+            print(i, j)
 
     return term_document_matrix_with_tf_idf

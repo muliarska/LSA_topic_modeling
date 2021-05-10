@@ -1,17 +1,38 @@
-from sklearn.decomposition import TruncatedSVD
+import numpy as np
 
 
-def apply_svd(data, docs, topics_numb):
-    svd_model = TruncatedSVD(n_components=topics_numb, algorithm='randomized', n_iter=100, random_state=122)
-    svd_model.fit(data)
+def apply_svd_basic(data):
 
-    # print(len(svd_model.components_))
+    # Shapes of matrices:
 
-    for i, comp in enumerate(svd_model.components_):
-        docs_comp = zip(docs, comp)
-        sorted_docs = sorted(docs_comp, key=lambda x: x[1], reverse=True)[:7]
-        temp_str = "Topic " + str(i) + ": "
-        for t in sorted_docs:
-            temp_str += t[0] + " "
-        temp_str += "\n"
-        print(temp_str)
+    # u - matrix 511 x 10
+    # s - diagonal 10 x 10
+    # vh - matrix 10 x 10
+
+    return np.linalg.svd(data, full_matrices=True)
+
+
+def classify_into_topics(data, filenames):
+    u, s, vh = apply_svd_basic(data)
+
+    print(len(s))
+
+    topics = dict()
+
+    for list_index, doc_coeff_list in enumerate(vh):
+        max_coeff = doc_coeff_list[0] * s[0]
+        temp_coeff = doc_coeff_list[0]
+
+        for i in range(len(doc_coeff_list)):
+            if abs(doc_coeff_list[i]) * s[i] > max_coeff:
+                max_coeff = abs(doc_coeff_list[i]) * s[i]
+                temp_coeff = doc_coeff_list[i]
+
+        topic_index = np.where(doc_coeff_list == temp_coeff)[0][0]
+
+        if topic_index not in topics:
+            topics[topic_index] = []
+
+        topics[topic_index].append(filenames[list_index])
+
+    return topics
