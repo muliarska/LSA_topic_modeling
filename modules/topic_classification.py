@@ -16,30 +16,37 @@ def define_key_words(data, all_unique_words):
         for i in range(len(word_coef_list)):
             topics[i].append(word_coef_list[i])
 
+    for lst in range(len(topics)):
+        for val in range(len(topics[lst])):
+            topics[lst][val] = abs(topics[lst][val])
+
     for topic in range(len(topics)):
         max_coef = max(topics[topic])
         max_coef_index = topics[topic].index(max_coef)
+        key_words = [all_unique_words[max_coef_index]]
 
         second_max_coef = 0
         second_max_coef_index = 0
         for j in range(len(topics[topic])):
             if topics[topic][j] > second_max_coef\
-                    and topics[topic][j] != max_coef:
+                    and all_unique_words[j] not in key_words:
                 second_max_coef = topics[topic][j]
                 second_max_coef_index = j
+        key_words.append(all_unique_words[second_max_coef_index])
 
         third_max_coef = 0
         third_max_coef_index = 0
         for k in range(len(topics[topic])):
             if topics[topic][k] > third_max_coef \
-                    and topics[topic][k] != max_coef\
-                    and topics[topic][k] != second_max_coef:
+                    and topics[topic][k] != second_max_coef\
+                    and all_unique_words[k] not in key_words:
                 third_max_coef = topics[topic][k]
                 third_max_coef_index = k
+        key_words.append(all_unique_words[third_max_coef_index])
 
-        words[topic] = [all_unique_words[max_coef_index],
-                        all_unique_words[second_max_coef_index],
-                        all_unique_words[third_max_coef_index]]
+        words[topic] = [key_words[0],
+                        key_words[1],
+                        key_words[2]]
 
     # print(words)
     return words

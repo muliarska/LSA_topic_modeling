@@ -20,6 +20,8 @@ modified_tdm = tf_idf_modification(constructed_tdm)
 topics = classify_into_topics(modified_tdm, file_names)
 print("form tfidf")
 
+print(topics)
+
 # print results of classifying
 for i in topics:
     print("Topic ", i, topics[i])

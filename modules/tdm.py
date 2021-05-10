@@ -41,6 +41,8 @@ def tf_idf_modification(term_document_matrix):
     # defining the amount of documents and terms
     amount_of_documents = len(term_document_matrix[0])
     amount_of_terms = len(term_document_matrix)
+    print("docs: ", amount_of_documents)
+    print("terms: ", amount_of_terms)
 
     # initialising matrix for saving results of tf-idf applying
     term_document_matrix_with_tf_idf = [[0] * amount_of_documents for _ in range(amount_of_terms)]

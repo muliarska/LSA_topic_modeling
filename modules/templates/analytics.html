@@ -5,7 +5,16 @@
     <title>Topic Modelling Analytics</title>
 </head>
 <body>
-    <h1>Topic Modeling results</h1>
-    <h2>{{matrix | safe}}</h2>
+    <h2 class="h2-analytics">Topic Modeling results</h2>
+    <h2>{{documents | safe}}</h2>
+    <h2>{{classification | safe}}</h2>
+    <div class="documents-classification">
+        var = outputHTML = "";
+        var topics = {{classification | safe}};
+
+        for (var i = 0; i < topics.length; i++) {
+            outputHTML += topics[i]
+        }
+    </div>
 </body>
 </html>

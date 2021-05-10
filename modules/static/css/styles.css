@@ -80,3 +80,7 @@ input[type="submit"]:hover {
     background: #8b0000
 }
 
+.h2-analytics {
+    text-align: center;
+    color: black;
+}
