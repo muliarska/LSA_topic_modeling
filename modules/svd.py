@@ -14,9 +14,6 @@ def apply_svd_basic(data):
 
 def classify_into_topics(data, filenames):
     u, s, vh = apply_svd_basic(data)
-    print("len U\n", len(u), "\n", len(u[0]))
-
-    print(len(s))
 
     topics = dict()
 

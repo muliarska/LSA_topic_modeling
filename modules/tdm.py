@@ -5,7 +5,7 @@ import math
 def form_tdm(all_words):
     """
     (list) -> list
-    
+
     Form term-document matrix.
     :param all_words: matrix with words of each document.
     :return: term document matrix, with appearing of certain word in each document.
@@ -25,24 +25,20 @@ def form_tdm(all_words):
     for word in range(len(words)):
         for lst in range(len(all_words)):
             term_document_matrix[word].append(all_words[lst].count(words[word]))
-    
+
     return words, term_document_matrix
 
 
 def tf_idf_modification(term_document_matrix):
     """
     (list) -> list
-
     Function that applies TF-IDF on the document term matrix.
-
     :param term_document_matrix: matrix with the terms amounts in each document
     :return: document term matrix modified with TF-IDF
     """
     # defining the amount of documents and terms
     amount_of_documents = len(term_document_matrix[0])
     amount_of_terms = len(term_document_matrix)
-    print("docs: ", amount_of_documents)
-    print("terms: ", amount_of_terms)
 
     # initialising matrix for saving results of tf-idf applying
     term_document_matrix_with_tf_idf = [[0] * amount_of_documents for _ in range(amount_of_terms)]
@@ -76,6 +72,5 @@ def tf_idf_modification(term_document_matrix):
 
             # getting tf-idf by tf * idf
             term_document_matrix_with_tf_idf[i][j] = round(tf * idf, 3)
-            print(i, j)
 
     return term_document_matrix_with_tf_idf
