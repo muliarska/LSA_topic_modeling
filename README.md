@@ -100,12 +100,16 @@ To run the program you need:
 
 After running the app.py and following the link you will see:
 
+![Main page](https://github.com/muliarska/LSA_topic_modeling/blob/main/images/main_page.png)
 
 
 After that you need to upload archive with documents in ZIP or TAR.GZ formats.
+
+![Res1](https://github.com/muliarska/LSA_topic_modeling/blob/main/images/result1.png)
+
 Then after uploading you can get such a result:
 
- 
+ ![Res2](https://github.com/muliarska/LSA_topic_modeling/blob/main/images/result2.png)
 
 ## Contributors
 
