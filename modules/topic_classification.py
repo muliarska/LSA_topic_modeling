@@ -2,6 +2,13 @@ from modules.svd import apply_svd_basic
 
 
 def define_key_words(data, all_unique_words):
+    """
+    Defines the keywords of ll topics.
+
+    :param data: term document matrix with applied tf-idf
+    :param all_unique_words: unique terms in all docs
+    :return: topics main words
+    """
     u, s, vh = apply_svd_basic(data)
 
     # creating empty list topics, in which each list will correspond

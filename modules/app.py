@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 from modules.process_data import process_data
-from modules.tdm import form_dtm, tf_idf_modification
+from modules.svd import classify_into_topics
+from modules.tdm import form_tdm, tf_idf_modification
+from modules.topic_classification import define_key_words
 
 
 app = Flask(__name__)
@@ -9,32 +11,56 @@ app = Flask(__name__)
 
 @app.route('/')
 def upload_file():
+    """
+    Main page with uploading file possibility.
+
+    :return: initial html template
+    """
     return render_template("index.html")
 
 
 @app.route("/analytics", methods=["GET", "POST"])
 def upload():
+    """
+    Uploading images on the web page.
+
+    :return: html template with the obtained images
+    """
     if request.method == "POST":
         f = request.files["file"]
         f.save(secure_filename(f.filename))
+        filename = f.filename
+        ext_index = filename.find(".")
+        extension = filename[ext_index + 1:]
 
-        # # WORK WITH LSA
-        # extension = "r:gz"
-        # all_words = process_data(f.filename, extension)
-        #
-        # all_words = all_words[:2]
-        # constructed_dtm = form_dtm(all_words)
-        # modified_dtm = tf_idf_modification(constructed_dtm)
-        #
-        # print(constructed_dtm)
-        # print(modified_dtm)
+        if extension == "zip" or extension == "tar.gz":
+            if extension == "tar.gz":
+                extension = "r:gz"
+            all_words, file_names = process_data(filename, extension)
+            unique_words, constructed_tdm = form_tdm(all_words)
+            modified_tdm = tf_idf_modification(constructed_tdm)
+            topic_documents = classify_into_topics(modified_tdm, file_names)
+            classification = define_key_words(modified_tdm, unique_words)
 
-        topic_documents = {6: ['mini_newsgroups_to_test/alt.atheism/51121'], 11: ['mini_newsgroups_to_test/comp.graphics/37916'], 13: ['mini_newsgroups_to_test/comp.os.ms-windows.misc/9141'], 0: ['mini_newsgroups_to_test/comp.sys.ibm.pc.hardware/58829'], 1: ['mini_newsgroups_to_test/comp.sys.mac.hardware/50419'], 9: ['mini_newsgroups_to_test/comp.windows.x/64830'], 3: ['mini_newsgroups_to_test/misc.forsale/70337'], 4: ['mini_newsgroups_to_test/rec.autos/101564'], 7: ['mini_newsgroups_to_test/rec.motorcycles/103129', 'mini_newsgroups_to_test/sci.electronics/52464'], 2: ['mini_newsgroups_to_test/rec.sport.baseball/102590'], 17: ['mini_newsgroups_to_test/rec.sport.hockey/52550'], 15: ['mini_newsgroups_to_test/sci.crypt/14989'], 8: ['mini_newsgroups_to_test/sci.med/58061', 'mini_newsgroups_to_test/sci.space/59848'], 18: ['mini_newsgroups_to_test/soc.religion.christian/20491'], 12: ['mini_newsgroups_to_test/talk.politics.guns/53302'], 10: ['mini_newsgroups_to_test/talk.politics.mideast/75369'], 5: ['mini_newsgroups_to_test/talk.politics.misc/176869'], 14: ['mini_newsgroups_to_test/talk.religion.misc/82758']}
+            amount_of_documents = len(topic_documents)
+            topics = list(range(amount_of_documents))
+            docs_amount = []
+            sorted_documents = dict(sorted(topic_documents.items()))
+            amount_of_documents = 0
+            classification_updated = dict()
+            for key in sorted_documents:
+                amount = len(sorted_documents[key])
+                classification_updated[key] = classification[key]
+                docs_amount.append(amount)
+                amount_of_documents += amount
 
-        classification = {0: ['concert', 'wupost', 'wupost'], 1: ['arizona', 'hilarie', 'find'], 2: ['arizona', 'kedz', 'hilarie'], 3: ['strom', 'scouts', 'et'], 4: ['sipp', 'joth', 'asuvax'], 5: ['ringing', 'strom', 'jfare'], 6: ['designated', 'sipp', 'joth'], 7: ['engines', 'select', 'hmarvel'], 8: ['engines', 'select', 'glang'], 9: ['lord', 'land', 'god'], 10: ['lord', 'land', 'god'], 11: ['norton', 'land', 'edwards'], 12: ['lord', 'god', 'turn'], 13: ['gilham', 'norton', 'armenians'], 14: ['position', 'olivea', 'paul'], 15: ['michael', 'tree', 'full'], 16: ['tesla', 'flyback', 'osc'], 17: ['attendance', 'mario', 'team']}
+            keys = sorted_documents.keys()
 
-        topics = classification.values()
-        return render_template("analytics.html", documents=topic_documents, classification=topics)
+            return render_template("analytics.html", documents=topic_documents, classification=classification_updated,
+                                   keys=keys, length=len(keys), topics=topics, docs_amount=docs_amount,
+                                   amount_of_documents=amount_of_documents)
+        else:
+            return render_template("error.html")
 
 
 if __name__ == '__main__':

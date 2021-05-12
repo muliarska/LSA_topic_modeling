@@ -1,4 +1,5 @@
-nltk
-tarfile
 flask
-werkzeug+
+werkzeug
+tarfile
+nltk
+numpy

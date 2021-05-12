@@ -5,6 +5,14 @@ from nltk.corpus import stopwords
 
 
 def clean_data(content, all_words):
+    """
+
+    Cleaning the data.
+
+    :param content: file to clean
+    :param all_words: data in the file to clean
+    :return: cleaned data
+    """
     stop_words = set(stopwords.words('english'))
 
     # split data into tokens
@@ -27,6 +35,14 @@ def clean_data(content, all_words):
 
 
 def process_data(filename, extension):
+    """
+
+    Reading the data and getting all the words from documents.
+
+    :param filename: name of the file to read
+    :param extension: extension of the file
+    :return: words from the files, names of the files
+    """
     all_words = []
     count_pop = 0
     file_names = ""

@@ -2,19 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Topic Modelling Analytics</title>
+    <title>Topic Modeling Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/results_styles.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h2 class="h2-analytics">Topic Modeling results</h2>
-    <h2>{{documents | safe}}</h2>
-    <h2>{{classification | safe}}</h2>
-    <div class="documents-classification">
-        var = outputHTML = "";
-        var topics = {{classification | safe}};
+    <h3 class="h3-analytics">Amount of topics: {{length}}</h3>
+    <h3 class="h3-analytics">Amount of documents: {{amount_of_documents}}</h3>
+    <section class="results">
+        <div class="classification-table"></div>
+        <table id="topics-res">
+            <tr>
+            <th>Topic number</th>
+            <th>Key words</th>
+            <th>Documents</th>
+          </tr>
+        {% for i in keys %}
+            <tr>
+                <td>{{i}}</td>
+        <td>{{classification[i][0]}}, {{classification[i][1]}}, {{classification[i][2]}}, {{classification[i][3]}}, {{classification[i][4]}}</td>
+            {% for val in documents[i] %}
+               <td>{{val}}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </table>
+        </div>
+        <div class="graph">
+        <canvas id="lineChart"></canvas>
+            <script>
+                const labels = {{topics | safe}};
+                const data = {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Topic Modeling results: x label - topics, y label - documents amount',
+                    backgroundColor: 'rgb(95,158,160,255)',
+                    borderColor: 'rgb(95,158,160,255)',
+                    data: {{docs_amount | safe}},
+                  }]
+                };
 
-        for (var i = 0; i < topics.length; i++) {
-            outputHTML += topics[i]
-        }
-    </div>
+                const config = {
+                      type: 'line',
+                      data: data,
+                      options: {
+                        scales: {
+                          y: {
+                            beginAtZero: true
+                          }
+                        }
+                      },
+                    };
+
+                var myChart = new Chart(
+                document.getElementById('lineChart'),
+                config
+              );
+            </script>
+        </div>
+</section>
 </body>
 </html>

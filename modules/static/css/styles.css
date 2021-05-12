@@ -42,13 +42,13 @@ body {
     transform: translate(-50%,-50%);
 }
 
-input[type="file"] {
+input[type="button"] {
    position: relative;
    display:inline-block;
    font-size: 20px;
    box-sizing:border-box;
    background: #5F9EA0;
-   width: 300px;
+   width: 400px;
    height: 30px;
    outline: none;
    padding: 0 25px;
@@ -58,7 +58,7 @@ input[type="file"] {
 }
 
 
-input[type="file"]:hover {
+input[type="button"]:hover {
   background: #008B8B;
 }
 
@@ -80,7 +80,3 @@ input[type="submit"]:hover {
     background: #8b0000
 }
 
-.h2-analytics {
-    text-align: center;
-    color: black;
-}

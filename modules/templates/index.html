@@ -5,18 +5,20 @@
       <title>Latent Semantic Analysis for Topic Modelling</title>
       <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
       <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
+
    </head>
    <body>
    <header>
       <a href="#" class="img-logo"><img src="../static/img/logo.png" alt="img-logo"></a>
-      <h2>Latent Semantic Analysis for Topic Modelling</h2>
+      <h2>Latent Semantic Analysis for Topic Modeling</h2>
    </header>
    <main>
    <div class="file-uploader">
       <h1>DISCOVER TOPICS</h1>
       <form action = "http://localhost:5000/analytics" method = "POST"
          enctype = "multipart/form-data">
-         <input type = "file" title=" " name="file" hidden/>
+         <input type = "file" id="selectedFile" title=" " name="file" style="display: none;" />
+         <input type="button" value="Upload archive with documents" onclick="document.getElementById('selectedFile').click();" />
          <input type = "submit" value="Topic Modelling" hidden/>
       </form>
    </div>

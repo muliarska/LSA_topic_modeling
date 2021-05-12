@@ -2,6 +2,12 @@ import numpy as np
 
 
 def apply_svd_basic(data):
+    """
+    Applying svd to term document matrix.
+
+    :param data: term-document matrix with applied tf-idf
+    :return: three matrices
+    """
 
     # Shapes of matrices:
 
@@ -13,6 +19,13 @@ def apply_svd_basic(data):
 
 
 def classify_into_topics(data, filenames):
+    """
+    Using SVD to classify data into topics.
+
+    :param data: term-document matrix with applied tf-idf
+    :param filenames: names of the documents
+    :return: main topics with the files that correspond to them
+    """
     u, s, vh = apply_svd_basic(data)
 
     topics = dict()
